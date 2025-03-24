@@ -76,7 +76,6 @@ class ExpensesRepository:
         usd = await self._calculate_currency_exchange(expense_scheme.uah)
 
         expense.title = expense_scheme.title
-        expense.date = expense_scheme.date
         expense.uah = expense_scheme.uah
         expense.usd = usd
 

@@ -23,6 +23,6 @@ class ExpenseSchema(Schema):
     id: int | None = Field(default=None)
     telegram_id: int = Field(alias="telegramId")
     title: str = Field(max_length=64)
-    date: datetime
+    date: datetime | None = Field(default=None)
     uah: Decimal = Field(max_digits=9, decimal_places=2)
     usd: Decimal | None = Field(max_digits=9, decimal_places=2, default=None)
