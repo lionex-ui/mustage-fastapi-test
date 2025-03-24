@@ -1,0 +1,12 @@
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: mustage-test
+      POSTGRES_PASSWORD: pYQlylUvdYtyPnhEFHoXuIXI
+      POSTGRES_DB: mustage-test-task
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
