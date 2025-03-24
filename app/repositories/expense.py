@@ -47,14 +47,14 @@ class ExpensesRepository:
 
         return [ExpenseSchema.model_validate(expense) for expense in expenses]
 
-    async def add(self, expense_scheme: ExpenseSchema) -> AddExpenseResponse:
-        usd = await self._calculate_currency_exchange(expense_scheme.uah)
+    async def add(self, expense_schema: ExpenseSchema) -> AddExpenseResponse:
+        usd = await self._calculate_currency_exchange(expense_schema.uah)
 
         expense = ExpenseModel(
-            telegram_id=expense_scheme.telegram_id,
-            title=expense_scheme.title,
-            date=expense_scheme.date,
-            uah=expense_scheme.uah,
+            telegram_id=expense_schema.telegram_id,
+            title=expense_schema.title,
+            date=expense_schema.date,
+            uah=expense_schema.uah,
             usd=usd,
         )
 
@@ -69,14 +69,14 @@ class ExpensesRepository:
 
         return DeleteExpenseResponse(result=True)
 
-    async def edit(self, expense_scheme: ExpenseSchema) -> EditExpenseResponse:
-        result = await self.session.execute(select(ExpenseModel).filter(ExpenseModel.id == expense_scheme.id))
+    async def edit(self, expense_schema: ExpenseSchema) -> EditExpenseResponse:
+        result = await self.session.execute(select(ExpenseModel).filter(ExpenseModel.id == expense_schema.id))
         expense = result.scalar()
 
-        usd = await self._calculate_currency_exchange(expense_scheme.uah)
+        usd = await self._calculate_currency_exchange(expense_schema.uah)
 
-        expense.title = expense_scheme.title
-        expense.uah = expense_scheme.uah
+        expense.title = expense_schema.title
+        expense.uah = expense_schema.uah
         expense.usd = usd
 
         await self.session.commit()
